@@ -21,6 +21,7 @@ func (c *ContaCorrente) Sacar(valorDeSaque float64) (result string) {
 		return "Valor de saque inválido"
 	}
 }
+
 func (c *ContaCorrente) Depositar(ValorDeDeposito float64) (result string, Saldo float64) {
 	if ValorDeDeposito > 0 {
 		c.saldo += ValorDeDeposito
