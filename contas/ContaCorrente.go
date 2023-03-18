@@ -1,21 +1,21 @@
 package contas
 
 import (
-	"Banco/clientes"
+	"github.com/Pedro-Cecilio/Projeto-Banco/clientes"
 )
 
 type ContaCorrente struct {
 	Titular clientes.Titular
 	Agência int
 	Conta   int
-	Saldo   float64
+	saldo   float64
 }
 
 func (c *ContaCorrente) Sacar(valorDeSaque float64) (result string) {
-	if valorDeSaque <= c.Saldo && valorDeSaque > 0 {
-		c.Saldo -= valorDeSaque
+	if valorDeSaque <= c.saldo && valorDeSaque > 0 {
+		c.saldo -= valorDeSaque
 		return "Saque efetuado"
-	} else if valorDeSaque > c.Saldo {
+	} else if valorDeSaque > c.saldo {
 		return "Saldo Insuficiente"
 	} else {
 		return "Valor de saque inválido"
@@ -23,20 +23,23 @@ func (c *ContaCorrente) Sacar(valorDeSaque float64) (result string) {
 }
 func (c *ContaCorrente) Depositar(ValorDeDeposito float64) (result string, Saldo float64) {
 	if ValorDeDeposito > 0 {
-		c.Saldo += ValorDeDeposito
-		return "Deposíto efetuado", c.Saldo
+		c.saldo += ValorDeDeposito
+		return "Deposíto efetuado", c.saldo
 	}
-	return "Valor de depósito inválido", c.Saldo
+	return "Valor de depósito inválido", c.saldo
 }
 func (c *ContaCorrente) Transferir(contaAlvo *ContaCorrente, valorTransfe float64) (result string, saldoatt float64) {
-	if c.Saldo >= valorTransfe {
+	if c.saldo >= valorTransfe {
 		if valorTransfe > 0 {
-			c.Saldo -= valorTransfe
+			c.saldo -= valorTransfe
 			contaAlvo.Depositar(valorTransfe)
-			return "Transferência realizada com sucesso.", c.Saldo
+			return "Transferência realizada com sucesso.", c.saldo
 		}
 	} else {
-		return "Saldo insuficiente", c.Saldo
+		return "Saldo insuficiente", c.saldo
 	}
-	return "Valor de transferência inválido.", c.Saldo
+	return "Valor de transferência inválido.", c.saldo
+}
+func (c *ContaCorrente) ObterSaldo() float64 {
+	return c.saldo
 }
